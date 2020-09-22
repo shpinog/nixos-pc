@@ -5,7 +5,7 @@
     autorun = true;
     videoDrivers = [ "amdgpu" ];
     displayManager.sddm.enable = true;
-    services.xserver.displayManager.defaultSession = "none+awesome";
+    displayManager.defaultSession = "none+awesome";
 
     windowManager = {
       awesome = {

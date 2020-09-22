@@ -75,10 +75,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  # Xorg keyboard configuration
-  services.xserver.layout = "us, ru(winkeys)";
-  services.xserver.xkbOptions = "grp:caps_toggle,grp_led:caps";
-  services.xserver.xkbVariant = "winkeys";
 
   # Enable the Awesome Desktop Environment.
   services.xserver.windowManager = {
@@ -89,29 +85,6 @@
   };
   services.xserver.displayManager.defaultSession = "none+awesome";
 
-  ### Шрифты
-  fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
-      ubuntu_font_family
-      noto-fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-    ];
-
-    fontconfig = {
-      penultimate.enable = false;
-      defaultFonts = {
-        serif = [ "Ubuntu" "Noto" ];
-        sansSerif = [ "Ubuntu" "Noto" ];
-        monospace = [ "Fira" ];
-      };
-    };
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.shpinog = {

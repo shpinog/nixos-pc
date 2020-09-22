@@ -3,6 +3,13 @@
     enableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
+      ubuntu_font_family
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
       inconsolata
       dejavu_fonts
       ubuntu_font_family
@@ -13,9 +20,9 @@
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
-      monospace = [ "Source Code Pro" "DejaVu Sans Mono" "IPAGothic" ];
-      sansSerif = [ "DejaVu Sans" "IPAPGothic" ];
-      serif = [ "DejaVu Serif" "IPAPMincho" ];
+      serif = [ "Ubuntu" "Noto" ];
+      sansSerif = [ "Ubuntu" "Noto" ];
+      monospace = [ "Fira" ]
     };
   };
 }
