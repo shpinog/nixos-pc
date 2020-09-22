@@ -9,15 +9,13 @@ let
 in {
   imports = [ "${home-manager}/nixos" ];
 
-  
-  services.xserver.xkbOptions = "grp:caps_toggle, grp_led:caps";
-  services.xserver.xkbVariant = "winkeys";
-  services.xserver.layout = "us,ru(winkeys)";
 
   home-manager.users."shpinog" = {
 
     xsession.enable = true;
     xsession.windowManager.command = "exec awesome";
+
+    home.packages = [ pkgs.htop pkgs.smplayer ];
 
     home.keyboard = {
       layout = "us,ru(winkeys)";
@@ -25,7 +23,7 @@ in {
     };
 
     #home.file = {
-      #".Xdefaults".source = ./home/.Xdefaults;
+    #".Xdefaults".source = ./home/.Xdefaults;
     #};
 
     programs = {
@@ -37,5 +35,5 @@ in {
     };
 
   };
-
+  
 }
