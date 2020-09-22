@@ -5,13 +5,12 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-	./hardware-configuration.nix
-	./home-manager.nix
-	./configuration-packages.nix
-	./configuration-xserver.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./home-manager.nix
+    ./configuration-packages.nix
+    ./configuration-xserver.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -33,23 +32,18 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-   i18n.defaultLocale = "ru_RU.UTF-8";
-   console = {
-     font = "Lat2-Terminus16";
-     keyMap = "us";
-   };
+  i18n.defaultLocale = "ru_RU.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
- 
-  environment.systemPackages = with pkgs; [
-     wget vim neovim git tdesktop mate.caja mate.caja-extensions volctl flameshot steam-run firefox mesa htop alacritty
-
-   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -63,7 +57,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-   services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -79,53 +73,51 @@
   hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
-   services.xserver.enable = true;
-   services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   # Xorg keyboard configuration
-   services.xserver.layout = "us, ru(winkeys)";
-   services.xserver.xkbOptions = "grp:caps_toggle,grp_led:caps";
-   services.xserver.xkbVariant = "winkeys";
-
+  services.xserver.layout = "us, ru(winkeys)";
+  services.xserver.xkbOptions = "grp:caps_toggle,grp_led:caps";
+  services.xserver.xkbVariant = "winkeys";
 
   # Enable the Awesome Desktop Environment.
-   services.xserver.displayManager.sddm.enable = true;
-   services.xserver.windowManager = {
-     awesome = {
+  services.xserver.windowManager = {
+    awesome = {
       enable = true;
       luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
-     };
     };
-     services.xserver.displayManager.defaultSession = "none+awesome";
+  };
+  services.xserver.displayManager.defaultSession = "none+awesome";
 
   ### Шрифты
   fonts = {
-   enableDefaultFonts = true;
-   fonts  = with pkgs; [ 
-     ubuntu_font_family
-     noto-fonts
-     noto-fonts
-     noto-fonts-cjk
-     noto-fonts-emoji
-     liberation_ttf
-     fira-code
-     fira-code-symbols
-   ];
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      ubuntu_font_family
+      noto-fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+    ];
 
-   fontconfig = {
-     penultimate.enable = false;
-     defaultFonts = {
-     serif = [ "Ubuntu" "Noto" ];
-     sansSerif = [ "Ubuntu" "Noto" ];
-     monospace = [ "Fira" ];
-        };
+    fontconfig = {
+      penultimate.enable = false;
+      defaultFonts = {
+        serif = [ "Ubuntu" "Noto" ];
+        sansSerif = [ "Ubuntu" "Noto" ];
+        monospace = [ "Fira" ];
       };
     };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.shpinog = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-   };
+  users.users.shpinog = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
