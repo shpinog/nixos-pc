@@ -4,29 +4,28 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ];
+  imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = ["amdgpu" "r8169" ];
+  boot.initrd.availableKernelModules =
+    [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "amdgpu" "r8169" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "nixpool/root/nixos";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "nixpool/root/nixos";
+    fsType = "zfs";
+  };
 
-  fileSystems."/home" =
-    { device = "nixpool/home";
-      fsType = "zfs";
-    };
+  fileSystems."/home" = {
+    device = "nixpool/home";
+    fsType = "zfs";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/14A6-FC92";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/14A6-FC92";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

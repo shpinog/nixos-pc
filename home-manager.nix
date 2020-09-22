@@ -1,18 +1,17 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import <unstable> {};
+  unstable = import <unstable> { };
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
     rev = "7d68c46feb845c572ef335f824062f90fdebf655";
   };
-in
-{
+in {
   imports = [ "${home-manager}/nixos" ];
 
-#   services.xserver.layout = "us,ru(mac)";
-#   services.xserver.xkbOptions = "lv3:rwin_switch,apple:badmap";
-#   services.xserver.xkbVariant = "mac";
+  #   services.xserver.layout = "us,ru(mac)";
+  #   services.xserver.xkbOptions = "lv3:rwin_switch,apple:badmap";
+  #   services.xserver.xkbVariant = "mac";
 
   services.xserver.xkbOptions = "grp:caps_toggle, grp_led:caps";
   services.xserver.xkbVariant = "winkeys";
@@ -25,7 +24,7 @@ in
 
     home.keyboard = {
       layout = "us,ru(winkeys)";
-      options = [ "grp:caps_toggle" "grp_led:caps"];
+      options = [ "grp:caps_toggle" "grp_led:caps" ];
     };
 
     home.file = {
@@ -39,7 +38,7 @@ in
     programs = {
       git = {
         enable = true;
-        userName  = "Michael Baynov";
+        userName = "Michael Baynov";
         userEmail = "m.baynov@gmail.com";
       };
     };

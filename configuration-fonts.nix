@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
@@ -14,19 +13,9 @@
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
-      monospace = [
-        "Source Code Pro"
-        "DejaVu Sans Mono"
-        "IPAGothic"
-      ];
-      sansSerif = [
-        "DejaVu Sans"
-        "IPAPGothic"
-      ];
-      serif = [
-        "DejaVu Serif"
-        "IPAPMincho"
-      ];
+      monospace = [ "Source Code Pro" "DejaVu Sans Mono" "IPAGothic" ];
+      sansSerif = [ "DejaVu Sans" "IPAPGothic" ];
+      serif = [ "DejaVu Serif" "IPAPMincho" ];
     };
   };
 }
