@@ -7,8 +7,25 @@
     enable = true;
     autorun = true;
     videoDrivers = [ "amdgpu" ];
-    displayManager.sddm.enable = true;
+    deviceSection = ''
+      Option "TearFree" "true"
+    '';
+    displayManager.sddm = {
+      enable = true;
+      autoLogin.enable = true;
+      autoLogin.user = "shpinog";
+    };
     displayManager.defaultSession = "none+awesome";
+    libinput.enable = true;
+    config = ''
+      Section "InputClass"
+        Identifier "mouse accel"
+        Driver "libinput"
+        MatchIsPointer "on"
+        Option "AccelProfile" "flat"
+        Option "AccelSpeed" "0"
+      EndSection
+    '';
 
     windowManager = {
       awesome = {

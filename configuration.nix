@@ -10,6 +10,7 @@
     ./home-manager.nix
     ./configuration-packages.nix
     ./configuration-xserver.nix
+    ./hardware.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -87,9 +88,11 @@
 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.fish.enable = true;
   users.users.shpinog = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.A
+    shell = pkgs.fish;
   };
 
   # This value determines the NixOS release from which the default

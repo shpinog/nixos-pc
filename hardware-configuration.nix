@@ -10,7 +10,7 @@
     [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" "r8169" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [];
 
   fileSystems."/" = {
     device = "nixpool/root/nixos";
@@ -27,8 +27,13 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+
+  swapDevices =
+    [
+      #{ device = "/dev/zvol/nixpool/swap"; }
+      { device = "/dev/disk/by-uuid/71b96c28-9edc-42b7-af4c-daffed6d5c6d"; }
+    ];
 
   nix.maxJobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 }
