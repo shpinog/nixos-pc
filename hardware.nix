@@ -10,7 +10,6 @@ with deviceSpecific; {
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true; # For steam
   hardware.opengl.package = pkgs.mesa_drivers;
-  services.zfs.trim.enable = true;
   services.zfs.autoScrub.enable = true;
 
   boot = {
@@ -24,7 +23,6 @@ with deviceSpecific; {
     kernel.sysctl."kernel/sysrq" = 1;
     kernelParams = [
       "quiet"
-      "zfs.zfs_arc_max=1884901888"
       "scsi_mod.use_blk_mq=1"
       "modeset"
       "nofb"

@@ -4,36 +4,40 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix> ];
-
-  boot.initrd.availableKernelModules =
-    [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" "r8169" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [];
-
-  fileSystems."/" = {
-    device = "nixpool/root/nixos";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "nixpool/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/14A6-FC92";
-    fsType = "vfat";
-  };
-
-
-  swapDevices =
-    [
-      #{ device = "/dev/zvol/nixpool/swap"; }
-      { device = "/dev/disk/by-uuid/71b96c28-9edc-42b7-af4c-daffed6d5c6d"; }
+  imports =
+    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
+  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/1e95d118-0bc3-43b2-926b-56dc87e22d61";
+      fsType = "xfs";
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/ec3aa7e6-7f91-4e02-9130-b9be88894943";
+      fsType = "xfs";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/DCBE-11C4";
+      fsType = "vfat";
+    };
+
+   boot.initrd.luks.devices = {
+      crypt = {
+        device = "/dev/nvme0n1p1";
+        allowDiscards = true;
+        preLVM = true;
+    };
+    };
+
+  swapDevices = [ ];
+
   nix.maxJobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }

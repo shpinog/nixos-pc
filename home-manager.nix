@@ -11,6 +11,7 @@ in
   imports = [ "${home-manager}/nixos" ];
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  environment.variables.EDITOR = "nvim";
 
   # QT4/5 global theme
   environment.etc."xdg/Trolltech.conf" = {
@@ -31,18 +32,24 @@ in
     mode = "444";
   };
 
-
+ 
   home-manager.users."shpinog" = {
 
     xsession.enable = true;
     xsession.windowManager.command = "exec awesome";
+    home.sessionVariables.TERM = "xterm";
 
     home.packages = with pkgs; [
       htop
       smplayer
       spotify
+      micro
       steam
+      discord
       breeze-qt5
+      ranger
+      kitty
+      mpv
       # Icons (Main)
       gnome3.adwaita-icon-theme
       hicolor_icon_theme
@@ -67,9 +74,10 @@ in
     home.file.".icons/default".source =
       "${pkgs.breeze-qt5}/share/icons/breeze_cursors";
 
-    #home.file = {
-    #".Xdefaults".source = ./home/.Xdefaults;
-    #};
+    home.file = {
+    ".config/ranger".source =./configFiles/ranger;
+    ".config/kitty/kitty.conf".source =./configFiles/kitty.conf;
+    };
 
     programs = {
       git = {

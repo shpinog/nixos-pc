@@ -16,7 +16,6 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "d1be0afd";
 
   # networking.hostName = "nixos"; # Define your hostname.
