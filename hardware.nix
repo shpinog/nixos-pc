@@ -6,17 +6,12 @@ with deviceSpecific; {
 
   hardware.enableRedistributableFirmware = true; # For some unfree drivers
 
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true; # For steam
-  hardware.opengl.package = pkgs.mesa_drivers;
-  services.zfs.autoScrub.enable = true;
+ 
 
   boot = {
     loader = {
-      timeout = 3;
+      timeout = 30;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
     consoleLogLevel = 3;
     extraModprobeConfig = "options ec_sys write_support=1";
     kernel.sysctl."vm.swappiness" = 50;
@@ -30,6 +25,19 @@ with deviceSpecific; {
       "rd.udev.log_priority=3"
       "pti=off"
       "spectre_v2=off"
+      "mitigations=off"
+      "noibrs" 
+      "noibpb" 
+      "nopti"
+      "nospectre_v1"
+      "l1tf=off"
+      "nospec_store_bypass_disable"
+      "no_stf_barrier"
+      "mds=off"
+      "tsx=on" 
+      "tsx_async_abort=off"
+      "net.ifnames=0"
+      "usbhid.mousepoll=2"
     ];
   };
 

@@ -8,19 +8,54 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
+  nixpkgs.config = {
+  allowUnfree = true;
+  packageOverrides = pkgs: {
+    unstable = import <nixos-unstable> {
+      config = config.nixpkgs.config;
+    };
+  };
+  };
+
+
+
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableAllFirmware = true;
+
+  powerManagement.cpuFreqGovernor = "schedutil";
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+      pkgs.mesa_drivers
+    ];
+    driSupport = true;
+    driSupport32Bit = true; # For steam
+  };
+  
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+
+
+
+
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/1e95d118-0bc3-43b2-926b-56dc87e22d61";
       fsType = "xfs";
+      options = [ "defaults" "discard" ];
     };
 
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/ec3aa7e6-7f91-4e02-9130-b9be88894943";
       fsType = "xfs";
+      options = [ "defaults" "discard" ];
     };
 
   fileSystems."/boot" =
@@ -28,16 +63,20 @@
       fsType = "vfat";
     };
 
-   boot.initrd.luks.devices = {
+  fileSystems."/home/shpinog/mnt" =
+    { device = "/dev/disk/by-uuid/86f3aeda-4fc5-451f-9c05-4eff1a937046";
+      fsType = "ext4";
+    };
+
+  boot.initrd.luks.devices = {
       crypt = {
         device = "/dev/nvme0n1p1";
         allowDiscards = true;
         preLVM = true;
     };
-    };
+    }; 
 
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-}
+  }

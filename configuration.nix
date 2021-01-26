@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 
 {
+
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./home-manager.nix
@@ -17,6 +18,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostId = "d1be0afd";
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -25,7 +28,10 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp7s0.useDHCP = true;
+  networking.enableIPv6 = true;
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
+  #networking.interfaces.enp7s0.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -58,6 +64,11 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
+   networking.firewall.allowedUDPPorts = [8868 4679];
+  #Enable flatpak
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -86,13 +97,50 @@
   services.xserver.displayManager.defaultSession = "none+awesome";
 
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.fish.enable = true;
+  # Zsh+ ohMyZsh config
+  programs.zsh.enable = true;
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" "sudo" "docker" "kubectl" ];
+  };
+  programs.zsh.interactiveShellInit = ''
+    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
+
+    # Customize your oh-my-zsh options here
+    ZSH_THEME="robbyrussell"
+    plugins=(git docker)
+
+    bindkey '\e[5~' history-beginning-search-backward
+    bindkey '\e[6~' history-beginning-search-forward
+
+    HISTFILESIZE=500000
+    HISTSIZE=500000
+    setopt SHARE_HISTORY
+    setopt HIST_IGNORE_ALL_DUPS
+    setopt HIST_IGNORE_DUPS
+    setopt INC_APPEND_HISTORY
+    autoload -U compinit && compinit
+    unsetopt menu_complete
+    setopt completealiases
+
+    if [ -f ~/.aliases ]; then
+      source ~/.aliases
+    fi
+
+    source $ZSH/oh-my-zsh.sh
+  '';
+##
+
+  programs.zsh.promptInit = "";
+
+
   users.users.shpinog = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.A
-    shell = pkgs.fish;
+    extraGroups = [ "wheel" "networkmanager" "storage" "media" ]; # Enable ‘sudo’ for the user.A
+    shell = pkgs.zsh;
   };
+
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

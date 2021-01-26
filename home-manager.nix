@@ -12,6 +12,7 @@ in
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
   environment.variables.EDITOR = "nvim";
+  
 
   # QT4/5 global theme
   environment.etc."xdg/Trolltech.conf" = {
@@ -26,8 +27,8 @@ in
   environment.etc."xdg/gtk-3.0/settings.ini" = {
     text = ''
       [Settings]
-      gtk-icon-theme-name=breeze
-      gtk-theme-name=Breeze-gtk
+      gtk-icon-theme-name=Qogir
+      gtk-theme-name=Qogir
     '';
     mode = "444";
   };
@@ -38,27 +39,62 @@ in
     xsession.enable = true;
     xsession.windowManager.command = "exec awesome";
     home.sessionVariables.TERM = "xterm";
+    xdg.enable = true;
+    services.udiskie.enable = true;
 
     home.packages = with pkgs; [
       htop
+      ###Network analize
+      etherape
+      nmap
+      tcpdump
+      ngrep
+      filezilla
+      sshfs
+      wireshark-qt
+      metasploit
+      ipscan
+      ###
+      arc-theme
+      materia-theme
+      qogir-icon-theme
+      qogir-theme
       smplayer
       spotify
       micro
-      steam
       discord
       breeze-qt5
       ranger
+      nnn
       kitty
       mpv
+      qbittorrent
+      pcmanfm
+      viewnior
+      networkmanagerapplet
+      okular
       # Icons (Main)
+      xdg-user-dirs
+      xdg_utils
+      perl530Packages.FileMimeInfo
+      feh
+      ark
+      ###
+      python3
+      ###
+      lxappearance
+      ffmpeg-full
+      peek
+ 	    simplescreenrecorder
+      pavucontrol
       gnome3.adwaita-icon-theme
       hicolor_icon_theme
     ];
     gtk = {
       enable = true;
       iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
+        name = "Qogir";
+        package = pkgs.qogir-theme;
       };
       font = {
         name = "IBM Plex 12";
@@ -74,10 +110,20 @@ in
     home.file.".icons/default".source =
       "${pkgs.breeze-qt5}/share/icons/breeze_cursors";
 
+   # home.file = {
+   # ".config/ranger" = {
+   #   source = ./configFiles/ranger;
+   #   recursive = true;
+    #};
+    #};  
+
     home.file = {
-    ".config/ranger".source =./configFiles/ranger;
     ".config/kitty/kitty.conf".source =./configFiles/kitty.conf;
+    ".config/ranger".source =./configFiles/ranger;
+
+
     };
+
 
     programs = {
       git = {
