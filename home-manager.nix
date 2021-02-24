@@ -4,7 +4,8 @@ let
   unstable = import <unstable> {};
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    rev = "96d7de6db18d9a5bf254ddf3525bb4ef1d2a6bda";
+    rev = "209566c752c4428c7692c134731971193f06b37c";
+    ref = "release-201.09";
   };
 in
 {
@@ -41,27 +42,32 @@ in
     home.sessionVariables.TERM = "xterm";
     xdg.enable = true;
     services.udiskie.enable = true;
+    
+     programs = {
+
+      fish = {
+
+        enable =true;
+
+      };
+
+     };
+
+    
+
 
     home.packages = with pkgs; [
       htop
       ###Network analize
-      etherape
       nmap
       tcpdump
       ngrep
-      filezilla
       sshfs
-      wireshark-qt
-      metasploit
       ipscan
       ###
       arc-theme
-      materia-theme
-      qogir-icon-theme
-      qogir-theme
       smplayer
       spotify
-      micro
       discord
       breeze-qt5
       ranger
@@ -78,9 +84,6 @@ in
       xdg_utils
       perl530Packages.FileMimeInfo
       feh
-      ark
-      ###
-      python3
       ###
       lxappearance
       ffmpeg-full
@@ -90,6 +93,12 @@ in
       gnome3.adwaita-icon-theme
       hicolor_icon_theme
     ];
+
+
+
+
+
+
     gtk = {
       enable = true;
       iconTheme = {
@@ -110,19 +119,15 @@ in
     home.file.".icons/default".source =
       "${pkgs.breeze-qt5}/share/icons/breeze_cursors";
 
-   # home.file = {
-   # ".config/ranger" = {
-   #   source = ./configFiles/ranger;
-   #   recursive = true;
-    #};
-    #};  
 
     home.file = {
     ".config/kitty/kitty.conf".source =./configFiles/kitty.conf;
     ".config/ranger".source =./configFiles/ranger;
 
 
-    };
+    }; 
+  
+
 
 
     programs = {

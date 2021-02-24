@@ -7,35 +7,46 @@
 {
 
   imports = [ # Include the results of the hardware scan.
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
     ./home-manager.nix
     ./configuration-packages.nix
     ./configuration-xserver.nix
     ./hardware.nix
+    ./polkit.nix
+    ./kernel.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+#Enable nonfree and unstable
+  nixpkgs.config = {
+  allowUnfree = true;
+  packageOverrides = pkgs: {
+
+    unstable = import <nixos-unstable> {
+      config = config.nixpkgs.config;
+    };
+  };
+  };
+
+  
+  nix.autoOptimiseStore = true;
   networking.hostId = "d1be0afd";
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  virtualisation.docker.enable = false;
+  services.gvfs.enable = true;
+  services.geoclue2.enable = false;
+  
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+  # Networking
+ 
   networking.useDHCP = false;
   networking.enableIPv6 = true;
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
+  services.openssh.enable = true;
+  networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
+  networking.firewall.allowedUDPPorts = [8868 4679];
   #networking.interfaces.enp7s0.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "ru_RU.UTF-8";
@@ -47,98 +58,21 @@
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  nixpkgs.config.allowUnfree = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  #   pinentryFlavor = "gnome3";
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
-   networking.firewall.allowedUDPPorts = [8868 4679];
+  
   #Enable flatpak
   services.flatpak.enable = true;
-  xdg.portal.enable = true;
+  xdg.portal.enable = true;  
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-
-  # Enable the Awesome Desktop Environment.
-  services.xserver.windowManager = {
-    awesome = {
-      enable = true;
-      luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
-    };
-  };
-  services.xserver.displayManager.defaultSession = "none+awesome";
-
-
-  # Zsh+ ohMyZsh config
-  programs.zsh.enable = true;
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [ "git" "sudo" "docker" "kubectl" ];
-  };
-  programs.zsh.interactiveShellInit = ''
-    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
-
-    # Customize your oh-my-zsh options here
-    ZSH_THEME="robbyrussell"
-    plugins=(git docker)
-
-    bindkey '\e[5~' history-beginning-search-backward
-    bindkey '\e[6~' history-beginning-search-forward
-
-    HISTFILESIZE=500000
-    HISTSIZE=500000
-    setopt SHARE_HISTORY
-    setopt HIST_IGNORE_ALL_DUPS
-    setopt HIST_IGNORE_DUPS
-    setopt INC_APPEND_HISTORY
-    autoload -U compinit && compinit
-    unsetopt menu_complete
-    setopt completealiases
-
-    if [ -f ~/.aliases ]; then
-      source ~/.aliases
-    fi
-
-    source $ZSH/oh-my-zsh.sh
-  '';
-##
-
-  programs.zsh.promptInit = "";
-
-
+  #User and shell settings
+  programs.fish.enable = true;
   users.users.shpinog = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "storage" "media" ]; # Enable ‘sudo’ for the user.A
-    shell = pkgs.zsh;
+    extraGroups = [ "wheel" "networkmanager" "storage" "media" "docker" "lp" ]; # Enable ‘sudo’ for the user.A
+    shell = pkgs.fish;
   };
+
+  
 
 
 

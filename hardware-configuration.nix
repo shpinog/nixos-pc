@@ -4,44 +4,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ];
-
-  nixpkgs.config = {
-  allowUnfree = true;
-  packageOverrides = pkgs: {
-    unstable = import <nixos-unstable> {
-      config = config.nixpkgs.config;
-    };
-  };
-  };
-
-
-
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.enableAllFirmware = true;
-
-  powerManagement.cpuFreqGovernor = "schedutil";
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      libvdpau-va-gl
-      pkgs.mesa_drivers
-    ];
-    driSupport = true;
-    driSupport32Bit = true; # For steam
-  };
   
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-
 
 
 
@@ -76,7 +39,21 @@
     };
     }; 
 
-  swapDevices = [ ];
+  swapDevices = [
+      {
+      device = "/swapfile";
+      priority = 0;
+      size = 2048;
+    }
+    
+   ];
 
-  nix.maxJobs = lib.mkDefault 16;
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="nvme*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
+    ACTION=="add|change", KERNEL=="sdb", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="kyber"
+    ACTION=="add|change", KERNEL=="sdc", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="kyber"
+  '';
+
+
+  
   }

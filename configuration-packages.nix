@@ -1,5 +1,6 @@
 { config, pkgs, system, ... }:
 
+
 let
 
 unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
@@ -9,21 +10,26 @@ in
 {
   environment.systemPackages = with pkgs; [
     sudo
-    krusader
+    schedtool
+    lm_sensors
     breeze-icons
     ntfs3g
+    geoclue2
     smartmontools
     unstable.vscode
-    openvpn
+    unstable.corectrl
+    ncurses5
+    ncurses
     wget
     unzip
     unar
     git
     unstable.vscode
-    unstable.radeon-profile
-    unstable.stockfish
     sysctl
     vim
+    python3Full
+    pythonPackages.pip
+    pythonPackages.setuptools
     vlc
     tor-browser-bundle-bin
     unstable.tdesktop
@@ -41,17 +47,11 @@ in
     global
     ctags
     fpc
-    ghc
     binutils
     coreutils
-    cabal-install
     python
     utillinux
-    pixiewps
     wpa_supplicant
-    aircrack-ng
-    hashcat-utils
-    phrasendrescher
     python37Packages.termcolor
     iw
     networkmanager-openvpn

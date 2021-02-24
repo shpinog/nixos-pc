@@ -2,19 +2,21 @@
   services.xserver.xkbOptions = "grp:caps_toggle, grp_led:caps";
   services.xserver.xkbVariant = "winkeys";
   services.xserver.layout = "us,ru(winkeys)";
+  services.xserver.displayManager.defaultSession = "none+awesome";
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "shpinog";
+
   services.xserver = {
     enable = true;
     autorun = true;
     videoDrivers = [ "amdgpu" ];
     deviceSection = ''
-      Option "TearFree" "true"
+      Option "TearFree" "false"
     '';
-    displayManager.sddm = {
-      enable = true;
-      autoLogin.enable = true;
-      autoLogin.user = "shpinog";
-    };
-    displayManager.defaultSession = "none+awesome";
+    
+
+    
     libinput.enable = true;
     config = ''
       Section "InputClass"
@@ -26,12 +28,17 @@
       EndSection
     '';
 
+    
+
+       # Enable the Awesome Desktop Environment.
     windowManager = {
       awesome = {
-        enable = true;
-        luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
+       enable = true;
+       luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
       };
     };
+
+
 
   };
 }
