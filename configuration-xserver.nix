@@ -6,6 +6,7 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "shpinog";
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
 
   services.picom = {

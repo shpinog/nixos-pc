@@ -9,13 +9,14 @@
   imports = [ # Include the results of the hardware scan.
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
-    ./home-manager.nix
+    ./home-manager/home-manager.nix
     ./configuration-fonts.nix
     ./configuration-packages.nix
     ./configuration-xserver.nix
     ./hardware.nix
     ./polkit.nix
     ./kernel.nix
+
   ];
 
 #Enable nonfree and unstable
