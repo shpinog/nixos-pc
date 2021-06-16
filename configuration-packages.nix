@@ -8,37 +8,51 @@ unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 
 {
-  environment.systemPackages = with pkgs; [
+
+    programs.steam.enable = true;
+
+    environment.systemPackages = with pkgs; [
     sudo
+    glib
+    pkg-config
+    wpgtk
+    kitty
+    killall
+    unstable.lsd
+    clinfo
     schedtool
+    sublime3
+    xorg.libXft
+    symbola
+    font-manager
+    noto-fonts
+    noto-fonts-extra
+    pass
+    gnupg
+    unstable.spotify
     lm_sensors
     breeze-icons
     ntfs3g
-    geoclue2
+    glibc
     smartmontools
-    unstable.vscode
+    vscode
     unstable.corectrl
+    flatpak
     ncurses5
     ncurses
     wget
     unzip
     unar
     git
-    unstable.vscode
     sysctl
     vim
     python3Full
     pythonPackages.pip
     pythonPackages.setuptools
     vlc
-    tor-browser-bundle-bin
-    unstable.tdesktop
-    unstable.steam
-    steamPackages.steam-runtime
-    firefox
+    unstable.kotatogram-desktop
     volctl
     flameshot
-    mesa
     htop
     dmenu
     alacritty
@@ -55,8 +69,19 @@ in
     python37Packages.termcolor
     iw
     networkmanager-openvpn
-    
+
     #    bluez blueman
   ];
+
+programs = {
+  gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+    enableSSHSupport = true;
+  };
+};
+
+
+
 }
 

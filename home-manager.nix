@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  unstable = import <unstable> {};
+  unstable = import <unstable> { };
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
     rev = "209566c752c4428c7692c134731971193f06b37c";
@@ -13,7 +13,8 @@ in
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
   environment.variables.EDITOR = "nvim";
-  
+
+
 
   # QT4/5 global theme
   environment.etc."xdg/Trolltech.conf" = {
@@ -34,44 +35,22 @@ in
     mode = "444";
   };
 
- 
+
   home-manager.users."shpinog" = {
-
-    xsession.enable = true;
-    xsession.windowManager.command = "exec awesome";
-    home.sessionVariables.TERM = "xterm";
-    xdg.enable = true;
-    services.udiskie.enable = true;
-    
-     programs = {
-
-      fish = {
-
-        enable =true;
-
-      };
-
-     };
-
-    
 
 
     home.packages = with pkgs; [
       htop
-      ###Network analize
       nmap
       tcpdump
       ngrep
+      firefox
       sshfs
       ipscan
-      ###
       arc-theme
       smplayer
-      spotify
       discord
       breeze-qt5
-      ranger
-      nnn
       kitty
       mpv
       qbittorrent
@@ -79,16 +58,13 @@ in
       viewnior
       networkmanagerapplet
       okular
-      # Icons (Main)
       xdg-user-dirs
       xdg_utils
       perl530Packages.FileMimeInfo
-      feh
-      ###
       lxappearance
       ffmpeg-full
       peek
- 	    simplescreenrecorder
+      simplescreenrecorder
       pavucontrol
       gnome3.adwaita-icon-theme
       hicolor_icon_theme
@@ -96,7 +72,7 @@ in
 
 
 
-
+    
 
 
     gtk = {
@@ -121,12 +97,11 @@ in
 
 
     home.file = {
-    ".config/kitty/kitty.conf".source =./configFiles/kitty.conf;
-    ".config/ranger".source =./configFiles/ranger;
+      ".config/kitty/kitty.conf".source = ./configFiles/kitty.conf;
+      ".config/ranger".source = ./configFiles/ranger;
 
 
-    }; 
-  
+    };
 
 
 
@@ -135,6 +110,42 @@ in
         enable = true;
         userName = "Shpinog";
         userEmail = "shpinog@gmail.com";
+      };
+
+      rofi = {
+        enable = true;
+        font = "Hack 16";
+      
+      };
+
+      starship = {
+        enable = true;
+      };
+
+      bash = {
+        enable = true;
+      }; 
+
+      mpv = {
+        enable = true;
+        config = 
+        {
+          profile = "gpu-hq";
+          deband = "no";
+          force-window = true;
+          ytdl-format = "bestvideo+bestaudio";
+          cache-default = 4000000;
+          cache = "yes";
+          cache-on-disk = "yes";
+          cache-pause-initial = "yes";
+          cache-pause-wait = "10";
+          interpolation = "yes";
+          video-sync = "display-resample";
+          tscale = "oversample";
+          hwdec = "auto-safe";
+          vo = "gpu,vx";
+          hwdec-codecs = "all";
+        };
       };
     };
 

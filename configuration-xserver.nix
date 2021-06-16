@@ -7,6 +7,17 @@
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "shpinog";
 
+
+  services.picom = {
+
+    enable = false;
+    backend = "glx";
+    vSync = true;
+
+  };
+  
+
+
   services.xserver = {
     enable = true;
     autorun = true;
@@ -30,9 +41,10 @@
 
     
 
+
        # Enable the Awesome Desktop Environment.
     windowManager = {
-      awesome = {
+       awesome = {
        enable = true;
        luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
       };

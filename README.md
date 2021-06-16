@@ -1,4 +1,3 @@
 # nixos-pc
 
-
-Try make full reproduct my awesomewm desktop. Test.
+Try make full reproduct my awesomewm desktop.
