@@ -10,10 +10,27 @@ in
 {
 
     programs.steam.enable = true;
+    
+
+
 
     environment.systemPackages = with pkgs; [
     sudo
+
+##########-Wayland\Sway ##################
+    wayland
+    clipman
+    emacs-nox
+    unstable.mako
+    unstable.swaybg
+    unstable.wofi
+############################
+    unstable.tdesktop
+    steam-run-native
+    xclip
     glib
+    wireguard
+    wireguard-tools
     pkg-config
     wpgtk
     kitty
@@ -32,6 +49,7 @@ in
     unstable.spotify
     lm_sensors
     breeze-icons
+    papirus-icon-theme
     ntfs3g
     glibc
     smartmontools
@@ -45,7 +63,7 @@ in
     unar
     git
     sysctl
-    vim
+    neovim
     python3Full
     pythonPackages.pip
     pythonPackages.setuptools

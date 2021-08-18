@@ -55,5 +55,14 @@
   '';
 
 
+# 
+#  fileSystems."/home/shpinog/HDDWD" =
+#    {
+#    device = "192.168.0.205:/";
+#    fsType = "nfs";
+#    options = [ "x-systemd.automount" "noauto" "user" "rw" ];
+#  };
+# 
+
   
   }

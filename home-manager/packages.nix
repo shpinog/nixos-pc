@@ -15,19 +15,20 @@
       breeze-qt5
       kitty
       mpv
+      ddrescue
+      udiskie
+      usbutils
+      mate.caja
+      slurp # wayland
+      #
       qbittorrent
-      pcmanfm
-      viewnior
       networkmanagerapplet
       okular
-      xdg-user-dirs
-      xdg_utils
-      perl530Packages.FileMimeInfo
       lxappearance
       ffmpeg-full
       peek
-      simplescreenrecorder
       pavucontrol
+      audio-recorder
       gnome3.adwaita-icon-theme
       hicolor_icon_theme
   ];

@@ -3,9 +3,13 @@
 
   gtk = {
     enable = true;
+    theme = {
+      name = "Materia";
+      package = pkgs.materia-theme;
+    };
     iconTheme = {
-      name = "Qogir";
-      package = pkgs.qogir-theme;
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
     };
     font = {
       name = "IBM Plex 12";
@@ -14,11 +18,24 @@
   };
 
 
-    programs = {
+  programs = {
+
+
+    firefox = {
+        enableGnomeExtensions = true;
+    };
+
       git = {
         enable = true;
         userName = "Shpinog";
         userEmail = "shpinog@gmail.com";
+      };
+
+      emacs = {
+        enable = true;
+        package = pkgs.emacs-nox;
+                
+
       };
 
       rofi = {

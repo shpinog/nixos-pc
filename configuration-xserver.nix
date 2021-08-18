@@ -2,26 +2,35 @@
   services.xserver.xkbOptions = "grp:caps_toggle, grp_led:caps";
   services.xserver.xkbVariant = "winkeys";
   services.xserver.layout = "us,ru(winkeys)";
-  services.xserver.displayManager.defaultSession = "none+awesome";
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "shpinog";
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+ services.xserver.displayManager.defaultSession = "sway";
 
-
-  services.picom = {
-
-    enable = false;
-    backend = "glx";
-    vSync = true;
-
+  services.xserver.displayManager.startx= {
+    enable = true;
   };
-  
+#  services.xserver.displayManager.autoLogin.enable = true;
+#  services.xserver.displayManager.autoLogin.user = "shpinog";
 
+
+programs.sway = {
+  
+  enable = true;
+  wrapperFeatures.gtk = true;
+
+  extraPackages = with pkgs; [
+  swaylock
+  swayidle
+  wl-clipboard
+  mako # notification daemon
+  waybar
+  xdg-desktop-portal
+  xdg-desktop-portal-wlr
+  grim
+  ];
+};
 
   services.xserver = {
     enable = true;
-    autorun = true;
+    autorun = false;
     videoDrivers = [ "amdgpu" ];
     deviceSection = ''
       Option "TearFree" "false"
@@ -40,10 +49,11 @@
       EndSection
     '';
 
-    
+
 
 
        # Enable the Awesome Desktop Environment.
+
     windowManager = {
        awesome = {
        enable = true;

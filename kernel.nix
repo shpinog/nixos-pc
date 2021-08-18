@@ -3,13 +3,14 @@
 # Boot and modules
   nix.buildCores= 12;
   nix.maxJobs = lib.mkDefault 16;
-  boot.kernelPackages = pkgs.linuxPackages_xanmod; 
+  boot.kernelPackages = pkgs.linuxPackages_latest; 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" "nvme" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [""];
   security.apparmor.enable = false;
-  zramSwap.enable = true;
+  zramSwap.enable = false;
   zramSwap.algorithm = "zstd" ;
 
 
@@ -38,18 +39,6 @@
 
 
 
-  # nixpkgs = {
-  #   overlays = [
-  #     (self: super: {
-  #       linuxZenWMuQSS = pkgs.linuxPackagesFor (pkgs.linux_zen.override {
-  #         structuredExtraConfig = with lib.kernel; {
-  #           SCHED_MUQSS = yes;
-  #         };
-  #         ignoreConfigErrors = true;
-  #       });
-  #     })
-  #   ];
-  # };
 
 
 

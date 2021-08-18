@@ -16,6 +16,8 @@
     ./hardware.nix
     ./polkit.nix
     ./kernel.nix
+    ./network.nix
+    ./greetd.nix
 
   ];
 
@@ -78,6 +80,7 @@
   programs.bash.enableLsColors = true;
   programs.bash.vteIntegration = true;
   programs.bash.enableCompletion = true;
+   services.teamviewer.enable = true;
 
 
 
