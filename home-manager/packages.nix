@@ -6,7 +6,6 @@
       nmap
       tcpdump
       ngrep
-      firefox
       sshfs
       ipscan
       arc-theme
@@ -18,7 +17,6 @@
       ddrescue
       udiskie
       usbutils
-      mate.caja
       slurp # wayland
       #
       qbittorrent

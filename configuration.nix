@@ -9,7 +9,7 @@
   imports = [ # Include the results of the hardware scan.
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
-    ./home-manager/home-manager.nix
+   # ./home-manager/home-manager.nix
     ./configuration-fonts.nix
     ./configuration-packages.nix
     ./configuration-xserver.nix
@@ -18,8 +18,18 @@
     ./kernel.nix
     ./network.nix
     ./greetd.nix
+    ./mesa.nix
 
   ];
+
+#VirtualBox
+
+services.gvfs.enable = true;
+
+
+
+
+
 
 #Enable nonfree and unstable
   nixpkgs.config = {
@@ -38,10 +48,7 @@
   nix.autoOptimiseStore = true;
   networking.hostId = "d1be0afd";
   virtualisation.docker.enable = false;
-  services.gvfs = {
-    enable = true;
-    package = lib.mkForce pkgs.gnome3.gvfs;
-  };  
+
   environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ]; # provides a default authentification client for policykit
   
 
@@ -54,7 +61,7 @@
   services.openssh.enable = true;
   networking.firewall.logRefusedConnections = false;
   networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
-  networking.firewall.allowedUDPPorts = [8868 4679];
+  networking.firewall.allowedUDPPorts = [8868 4679 69];
 
   #networking.interfaces.enp7s0.useDHCP = true;
 
@@ -68,7 +75,7 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
-
+  
 
   
   #Enable flatpak
@@ -80,23 +87,36 @@
   programs.bash.enableLsColors = true;
   programs.bash.vteIntegration = true;
   programs.bash.enableCompletion = true;
-   services.teamviewer.enable = true;
 
-
+  #Android
+  programs.adb.enable = true;
 
  users.users.shpinog = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "storage" "media" "docker" "lp" ]; # Enable ‘sudo’ for the user.A
+    extraGroups = [ "wheel" "networkmanager" "adbusers" "storage" "media" "docker" "lp" "corectrl" ]; # Enable ‘sudo’ for the user.A
     shell = pkgs.bash;
   };
 
-    nixpkgs.overlays = [
-      (self: super:
-        with super; {
-          awesome =
-            super.awesome.override { luaPackages = super.luajitPackages; };
-        })
-    ];
+
+
+  #  hardware.opengl =
+  #   let
+  #     pkgsMesaClover = import
+  #       (pkgs.fetchFromGitHub {
+  #         owner = "NixOS";
+  #         repo = "nixpkgs";
+  #         rev = "b41d29dd317255756acea206aa24ba49765c39ba";
+  #         sha256 = "0x8k1vifha417x4mxzdf33acgyf8rg69ipbap2nm9s08fhwz6436";
+  #       })
+  #       { inherit (pkgs) system; };
+  #   in
+  #   {
+  #     enable = true;
+  #     driSupport = true;
+  #     extraPackages = [
+  #       pkgsMesaClover.mesa.opencl
+  #     ];
+  #  };
 
 
   # This value determines the NixOS release from which the default

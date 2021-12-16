@@ -25,13 +25,25 @@ set $down j
 set $up k
 set $right l
 
-
 #Swaybg
 
-output "*" bg ~/.config/sway/saber.jpg fill
 
 
 ### Output configuration
+set $primary-output VGA-1
+set $second-output DVI-I-1
+
+output  $primary-output  pos 0 0 res 1280x1024
+output  $primary-output  subpixel rgb
+output  $primary-output  max_render_time off
+
+
+output  $second-output pos 1280 0 res 1280x1024
+output  $second-output subpixel rgb
+output  $second-output  max_render_time off
+
+
+
 #
 # Default wallpaper
 #output * bg ~/.config/sway/backgrounds/Sway_Wallpaper_Blue_1920x1080.png fill
@@ -70,11 +82,31 @@ output "*" bg ~/.config/sway/saber.jpg fill
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 #
-#
+
+#Binding to open a program on a new workspace
+set $workspace_new swaymsg -t get_workspaces -r | expr $(jq '[.[].num] | max') + 1 | xargs swaymsg workspace number && swaymsg exec --
 
 # Your apps
-set $term kitty
-set $browser firefox
+set $terminal foot
+set $browser chromium
+set $browserID chromium-browser
+set $filemanager nautilus
+set $filemanagerID org.gnome.Nautilus
+set $editor codium --enable-features=UseOzonePlatform --ozone-platform=wayland
+set $editorID VSCodium
+set $telegram telegram-desktop
+set $spotify spotify
+set $player mpv
+
+
+
+
+
+
+#####flashfocus
+
+
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -85,9 +117,19 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 # Basics:
 #
     # Start a terminal
-    bindsym --to-code $mod+Return exec $term
+    bindsym --to-code $mod+Return exec $terminal
     # Start --to-code a browser
     bindsym --to-code $mod+q exec $browser
+    # Start --to-code a filemanager
+    bindsym --to-code KP_Insert+KP_Left exec  $filemanager
+    # Start --to-code a editor
+    bindsym --to-code KP_Insert+KP_Begin exec $editor
+    # Start --to-code a filemanager
+    bindsym --to-code KP_Insert+KP_Home exec $telegram
+     # Start --to-code a Spotify
+    bindsym --to-code KP_Insert+KP_Up exec $spotify
+
+
     # take  --to-codescreen
     bindsym --to-code $mod+p exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
 
@@ -122,7 +164,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
     bindsym  $mod+Right focus right
-             
+
     # Move t he focused window with the same, but add Shift
     bindsym --to-code $mod+Shift+$left move left
     bindsym --to-code $mod+Shift+$down move down
@@ -134,19 +176,88 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
     bindsym --to-code $mod+Shift+Up move up
     bindsym --to-code $mod+Shift+Right move right
 #
-# Workspaces:
+### Workspaces:
 #
-    # Workspace names
-    set $ws1 "1": 
-    set $ws2 "2": 🌐 
-    set $ws3 "3": 
+    # Workspace names primary-output
+    set $ws1 "1": 🖥
+    set $ws2 "2": 🌐
+    set $ws3 "3": ⌨
     set $ws4 "4": 🎮
-    set $ws5 "5": 🎶
+    set $ws5 "5": 🎧
     set $ws6 "6": 💬
     set $ws7 "7"
     set $ws8 "8"
     set $ws9 "9"
-    set $ws0 "10"
+    # Workspace names second-output
+    set $ws11 "11": 🖥*
+    set $ws12 "12": 🌐*
+    set $ws13 "13": ⌨️*
+    set $ws14 "14": 🎮*
+    set $ws15 "15": 🎧*
+    set $ws16 "16": 💬*
+    set $ws17 "17"  💾* 
+  
+
+# Set first monitor workspaces to first monitor
+workspace $ws1 output $primary-output
+workspace $ws2 output $primary-output
+workspace $ws3 output $primary-output
+workspace $ws4 output $primary-output
+workspace $ws5 output $primary-output
+workspace $ws6 output $primary-output
+workspace $ws7 output $primary-output
+workspace $ws8 output $primary-output
+workspace $ws9 output $primary-output
+
+
+# Set second monitor workspaces to second monitor
+workspace $ws11 output $second-output
+workspace $ws12 output $second-output
+workspace $ws13 output $second-output
+workspace $ws14 output $second-output
+workspace $ws15 output $second-output
+workspace $ws16 output $second-output
+workspace $ws17 output $second-output
+workspace $ws18 output $second-output
+workspace $ws19 output $second-output
+
+
+# Switch to workspace
+    bindsym $mod+1 workspace $ws1
+    bindsym $mod+2 workspace $ws2
+    bindsym $mod+3 workspace $ws3
+    bindsym $mod+4 workspace $ws4
+    bindsym $mod+5 workspace $ws5
+    bindsym $mod+6 workspace $ws6
+
+    
+    bindsym Mod1+1 workspace $ws11
+    bindsym Mod1+2 workspace $ws12
+    bindsym Mod1+3 workspace $ws13
+    bindsym Mod1+4 workspace $ws14
+    bindsym Mod1+5 workspace $ws15
+    bindsym Mod1+6 workspace $ws16
+    
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace $ws1
+    bindsym $mod+Shift+2 move container to workspace $ws2
+    bindsym $mod+Shift+3 move container to workspace $ws3
+    bindsym $mod+Shift+4 move container to workspace $ws4
+    bindsym $mod+Shift+5 move container to workspace $ws5
+    bindsym $mod+Shift+6 move container to workspace $ws6
+   
+    
+
+    bindsym Mod1+Shift+1 move container to workspace $ws11
+    bindsym Mod1+Shift+2 move container to workspace $ws12
+    bindsym Mod1+Shift+3 move container to workspace $ws13
+    bindsym Mod1+Shift+4 move container to workspace $ws14
+    bindsym Mod1+Shift+5 move container to workspace $ws15
+    bindsym Mod1+Shift+6 move container to workspace $ws16
+   
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+
 
 ### Some windows setting
 
@@ -164,32 +275,54 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
     bindsym $mod+Tab workspace next
 
 ### Assign apps to workspaces
-    ####-1-####
-    assign [app_id="^kitty"] → $ws1
-    for_window [app_id="kitty"] move window to workspace "$ws1", focus
-    ####-2-####
+                                    
+                                    ####-1-####
+
+    assign [app_id="^$terminal"] → $ws1
+    for_window [app_id="$terminal"] move window to workspace "$ws1", focus, opacity $opacity
+                                    
+                                    ####-2-####
+
     assign [app_id="^firefox"] → $ws2
     for_window [app_id="firefox"] move window to workspace "$ws2", focus
-    ####-3-####
-    assign [app_id="mpv"] → $ws3
-    for_window [app_id="mpv"] move window to workspace "$ws3", focus
-    assign [class="^Caja"] → $ws3
-    for_window [class="^Caja"] move window to workspace "$ws3", focus
-    ####-4-####
+    assign [app_id="^&browserID"] → $ws2
+    for_window [app_id="$browserID"] move window to workspace "$ws2", focus
+    assign [class="^$browser"] → $ws2
+    for_window [class="$browser"] move window to workspace "$ws2", focus
+                                    
+                                    ####-3-####
+   
+    
+    assign [app_id="^$editorID"] → $ws13
+    for_window [app_id="^$editorID"] move window to workspace "$ws13", focus
+
+                                    
+                                    ####-4-####
     assign [class="^Steam"] → $ws4
     assign [class="^dota2"] → $ws4
-    ####-5-####
-    for_window [class="Spotify"] move window to workspace "$ws5", focus
-    ####-6-####
+    assign [app_id="mpv"] → $ws14      
+    for_window [app_id="mpv"] move window to workspace "$ws14", focus      
+                                    
+                                    ####-5-####
 
-    assign [app_id="^kotatogramdesktop"] → $ws6
-    assign [app_id="^telegramdesktop"] → $ws6
-    for_window [app_id="^kotatogramdesktop"] move window to workspace "$ws6", focus
-    for_window [app_id="^telegramdesktop"] move window to workspace "$ws6", focus
-    ####-7-####
-#
-    ####-8-####
-    # Auto float apps
+    for_window [class="Spotify"] move window to workspace "$ws15", focus
+
+                                    
+                                    ####-6-####
+
+    assign [app_id="^kotatogramdesktop"] → $ws16
+    assign [app_id="^telegramdesktop"] → $ws16
+    for_window [app_id="^kotatogramdesktop"] move window to workspace "$ws16", focus
+    for_window [app_id="^telegramdesktop"] move window to workspace "$ws16", focus
+
+                                    ####-7-####
+
+    assign [app_id="^$filemanagerID"] → $ws17
+    for_window [app_id="^$filemanagerID"] move window to workspace "$ws17", focus
+ 
+
+                                # Auto float apps
+
     for_window [app_id="gnome-calculator"] floating enable
     #for_window [class="^Caja$"] floating enable
     for_window [app_id="^mpv$"] floating enable
@@ -198,30 +331,12 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
     for_window [class="^steam$"] floating enable
     for_window [title="Firefox - Sharing Indicator"] floating enable
 
-    # Switch to workspace
-    bindsym $mod+1 workspace $ws1
-    bindsym $mod+2 workspace $ws2
-    bindsym $mod+3 workspace $ws3
-    bindsym $mod+4 workspace $ws4
-    bindsym $mod+5 workspace $ws5
-    bindsym $mod+6 workspace $ws6
-    bindsym $mod+7 workspace $ws7
-    bindsym $mod+8 workspace $ws8
-    bindsym $mod+9 workspace $ws9
-    bindsym $mod+0 workspace $ws0
-    # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace $ws1
-    bindsym $mod+Shift+2 move container to workspace $ws2
-    bindsym $mod+Shift+3 move container to workspace $ws3
-    bindsym $mod+Shift+4 move container to workspace $ws4
-    bindsym $mod+Shift+5 move container to workspace $ws5
-    bindsym $mod+Shift+6 move container to workspace $ws6
-    bindsym $mod+Shift+7 move container to workspace $ws7
-    bindsym $mod+Shift+8 move container to workspace $ws8
-    bindsym $mod+Shift+9 move container to workspace $ws9
-    bindsym $mod+Shift+0 move container to workspace $ws0
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+### opacity
+    set $opacity 0.9
+    for_window [class=".*"] opacity $opacity
+    for_window [app_id=".*"] opacity $opacity
+
+    
 #
 # Layout stuff:
 #
@@ -238,6 +353,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
     # Make the current focus fullscreen
     bindsym  --to-code $mod+f fullscreen
+    bindsym  --to-code $mod+Shift+f fullscreen global
 
     # Toggle the current focus between tiling and floating mode
     bindsym  --to-code $mod+Shift+space floating toggle
@@ -315,9 +431,16 @@ bar {
     }
 }
 
-##autostart 
+##autostart
+
+
+exec autotiling
+exec_always --no-startup-id flashfocus
+exec swaykbdd
+exec wl-paste -p -t text --watch clipman store -P --histpath="~/.local/share/clipman-primary.json" --no-startup-id flashfocus
+bindsym $mod+o exec clipman pick -t wofi
 exec_always nm-applet --indicator &
-exec_always udiskie   --tray &
+exec udiskie   --tray &
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK

@@ -4,8 +4,8 @@ let
   unstable = import <unstable> { };
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    rev = "148d85ee8303444fb0116943787aa0b1b25f94df";
-    ref = "release-21.05";
+    rev = "6ce1d64073f48b9bc9425218803b1b607454c1e7";
+    ref = "release-21.11";
   };
 in
 {
@@ -29,4 +29,3 @@ in
   };
 
 }
-

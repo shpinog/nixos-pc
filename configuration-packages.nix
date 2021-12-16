@@ -2,31 +2,57 @@
 
 
 let
-
-unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-
+  unstableTarball =
+    fetchTarball
+      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
 in
-
 {
 
-    programs.steam.enable = true;
-    
 
 
+
+
+    programs.steam.enable = false;
+
+
+   
 
     environment.systemPackages = with pkgs; [
     sudo
+    linuxPackages.x86_energy_perf_policy
+    ethtool
 
-##########-Wayland\Sway ##################
+###########-Wayland\Sway ###########
+    unstable.firefox-wayland
+    unstable.qtile
+    unstable.wlroots
+    unstable.kakoune
+    unstable.bitwarden
+    unstable.clipman
+    unstable.flashfocus
+    unstable.autotiling
+    swaykbdd
+    jq
+    python39Packages.cairocffi
+    python39Packages.dbus-next
+    unstable.foot
     wayland
     clipman
     emacs-nox
     unstable.mako
-    unstable.swaybg
-    unstable.wofi
-############################
+    swaybg
+    wofi
+###########Pipeware##############
+    unstable.easyeffects
+    
+########### Gnome utils ###########
+    gnome.nautilus
+    gnome.nautilus-python
+    gnome.file-roller
+
+########### Other ###########
     unstable.tdesktop
-    steam-run-native
+    #steam-run-native
     xclip
     glib
     wireguard
@@ -35,7 +61,6 @@ in
     wpgtk
     kitty
     killall
-    unstable.lsd
     clinfo
     schedtool
     sublime3
@@ -46,15 +71,14 @@ in
     noto-fonts-extra
     pass
     gnupg
-    unstable.spotify
+    spotify
     lm_sensors
     breeze-icons
     papirus-icon-theme
     ntfs3g
     glibc
     smartmontools
-    vscode
-    unstable.corectrl
+    unstable.vscodium
     flatpak
     ncurses5
     ncurses
@@ -65,10 +89,9 @@ in
     sysctl
     neovim
     python3Full
-    pythonPackages.pip
-    pythonPackages.setuptools
+    python3Packages.pip
+    python3Packages.setuptools
     vlc
-    unstable.kotatogram-desktop
     volctl
     flameshot
     htop
@@ -81,7 +104,6 @@ in
     fpc
     binutils
     coreutils
-    python
     utillinux
     wpa_supplicant
     python37Packages.termcolor

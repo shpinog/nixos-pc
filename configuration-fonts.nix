@@ -9,12 +9,9 @@
     fonts = with pkgs; [
       ubuntu_font_family
       noto-fonts-emoji
-      font-awesome
-      font-awesome_4
-      unifont
-      joypixels
       dejavu_fonts
-      ubuntu_font_family
+      font-awesome
+      font-awesome-ttf
     ];
 
     fontconfig = {
@@ -24,7 +21,7 @@
       serif = [ "Ubuntu" "Noto" ];
       sansSerif = [ "Ubuntu" "Noto" ];
       monospace = [ "Sans" ];
-      emoji = [ "Noto Color Emoji" "Twitter Color Emoji" "JoyPixels" "Unifont" "Unifont Upper"];
+      emoji = [ "Font Awesome 5 Brands" "Noto Color Emoji" "Font Awesome 5 Free" "Font Awesome 5 Free Solid" ];
 
     };
    };
