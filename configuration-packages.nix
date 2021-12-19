@@ -12,17 +12,17 @@ in
 
 
 
-    programs.steam.enable = false;
+  programs.steam.enable = false;
 
 
-   
 
-    environment.systemPackages = with pkgs; [
+
+  environment.systemPackages = with pkgs; [
     sudo
     linuxPackages.x86_energy_perf_policy
     ethtool
 
-###########-Wayland\Sway ###########
+    ###########-Wayland\Sway ###########
     unstable.firefox-wayland
     unstable.qtile
     unstable.wlroots
@@ -42,15 +42,15 @@ in
     unstable.mako
     swaybg
     wofi
-###########Pipeware##############
+    ###########Pipeware##############
     unstable.easyeffects
-    
-########### Gnome utils ###########
+
+    ########### Gnome utils ###########
     gnome.nautilus
     gnome.nautilus-python
     gnome.file-roller
 
-########### Other ###########
+    ########### Other ###########
     unstable.tdesktop
     #steam-run-native
     xclip
@@ -113,13 +113,13 @@ in
     #    bluez blueman
   ];
 
-programs = {
-  gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "curses";
-    enableSSHSupport = true;
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      pinentryFlavor = "curses";
+      enableSSHSupport = true;
+    };
   };
-};
 
 
 

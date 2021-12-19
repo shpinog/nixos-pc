@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
 
-    environment.variables.EDITOR = "nvim";
-    
-    # QT4/5 global theme
+  environment.variables.EDITOR = "nvim";
+
+  # QT4/5 global theme
   environment.etc."xdg/Trolltech.conf" = {
     text = ''
       [Qt]

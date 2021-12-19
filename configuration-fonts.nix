@@ -15,16 +15,16 @@
     ];
 
     fontconfig = {
-	enable = true;
+      enable = true;
 
-    defaultFonts = {
-      serif = [ "Ubuntu" "Noto" ];
-      sansSerif = [ "Ubuntu" "Noto" ];
-      monospace = [ "Sans" ];
-      emoji = [ "Font Awesome 5 Brands" "Noto Color Emoji" "Font Awesome 5 Free" "Font Awesome 5 Free Solid" ];
+      defaultFonts = {
+        serif = [ "Ubuntu" "Noto" ];
+        sansSerif = [ "Ubuntu" "Noto" ];
+        monospace = [ "Sans" ];
+        emoji = [ "Font Awesome 5 Brands" "Noto Color Emoji" "Font Awesome 5 Free" "Font Awesome 5 Free Solid" ];
 
+      };
     };
-   };
   };
 
 }

@@ -6,10 +6,11 @@
 
 {
 
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
-   # ./home-manager/home-manager.nix
+    # ./home-manager/home-manager.nix
     ./configuration-fonts.nix
     ./configuration-packages.nix
     ./configuration-xserver.nix
@@ -22,38 +23,38 @@
 
   ];
 
-#VirtualBox
+  #VirtualBox
 
-services.gvfs.enable = true;
-
-
+  services.gvfs.enable = true;
 
 
 
 
-#Enable nonfree and unstable
+
+
+  #Enable nonfree and unstable
   nixpkgs.config = {
-  allowUnfree = true;
-  joypixels.acceptLicense = true;
-  
-  packageOverrides = pkgs: {
+    allowUnfree = true;
+    joypixels.acceptLicense = true;
 
-    unstable = import <nixos-unstable> {
-      config = config.nixpkgs.config;
+    packageOverrides = pkgs: {
+
+      unstable = import <nixos-unstable> {
+        config = config.nixpkgs.config;
+      };
     };
   };
-  };
 
-  
+
   nix.autoOptimiseStore = true;
   networking.hostId = "d1be0afd";
   virtualisation.docker.enable = false;
 
   environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ]; # provides a default authentification client for policykit
-  
+
 
   # Networking
- 
+
   networking.useDHCP = false;
   networking.enableIPv6 = true;
   networking.networkmanager.enable = true;
@@ -61,7 +62,7 @@ services.gvfs.enable = true;
   services.openssh.enable = true;
   networking.firewall.logRefusedConnections = false;
   networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
-  networking.firewall.allowedUDPPorts = [8868 4679 69];
+  networking.firewall.allowedUDPPorts = [ 8868 4679 69 ];
 
   #networking.interfaces.enp7s0.useDHCP = true;
 
@@ -75,12 +76,12 @@ services.gvfs.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
-  
 
-  
+
+
   #Enable flatpak
   services.flatpak.enable = true;
-  xdg.portal.enable = true;  
+  xdg.portal.enable = true;
 
   #User and shell settings
 
@@ -91,7 +92,7 @@ services.gvfs.enable = true;
   #Android
   programs.adb.enable = true;
 
- users.users.shpinog = {
+  users.users.shpinog = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "adbusers" "storage" "media" "docker" "lp" "corectrl" ]; # Enable ‘sudo’ for the user.A
     shell = pkgs.bash;

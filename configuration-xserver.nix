@@ -2,18 +2,18 @@
   services.xserver.xkbOptions = "grp:caps_toggle, grp_led:caps";
   services.xserver.xkbVariant = "winkeys";
   services.xserver.layout = "us,ru(winkeys)";
- services.xserver.displayManager.defaultSession = "awesome";
+  services.xserver.displayManager.defaultSession = "awesome";
 
-  services.xserver.displayManager.startx= {
+  services.xserver.displayManager.startx = {
     enable = true;
   };
-#  services.xserver.displayManager.autoLogin.enable = true;
-#  services.xserver.displayManager.autoLogin.user = "shpinog";
+  #  services.xserver.displayManager.autoLogin.enable = true;
+  #  services.xserver.displayManager.autoLogin.user = "shpinog";
 
-hardware.opengl.enable = true;
+  hardware.opengl.enable = true;
 
 
- 
+
   services.xserver = {
     enable = true;
     autorun = false;
@@ -41,12 +41,12 @@ hardware.opengl.enable = true;
 
 
 
-       # Enable the Awesome Desktop Environment.
+    # Enable the Awesome Desktop Environment.
 
     windowManager = {
-       awesome = {
-       enable = true;
-       luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
+      awesome = {
+        enable = true;
+        luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
       };
     };
 
