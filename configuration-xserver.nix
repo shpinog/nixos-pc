@@ -10,14 +10,14 @@
   #  services.xserver.displayManager.autoLogin.enable = true;
   #  services.xserver.displayManager.autoLogin.user = "shpinog";
 
-  hardware.opengl.enable = true;
-
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
 
 
   services.xserver = {
     enable = true;
     autorun = false;
-    videoDrivers = [ "radeon" ];
+    videoDrivers = [ "nvidia" ];
 
 
     # deviceSection = ''

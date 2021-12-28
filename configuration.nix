@@ -19,7 +19,7 @@
     ./kernel.nix
     ./network.nix
     ./greetd.nix
-    ./mesa.nix
+    #./mesa.nix
 
   ];
 
@@ -98,26 +98,6 @@
     shell = pkgs.bash;
   };
 
-
-
-  #  hardware.opengl =
-  #   let
-  #     pkgsMesaClover = import
-  #       (pkgs.fetchFromGitHub {
-  #         owner = "NixOS";
-  #         repo = "nixpkgs";
-  #         rev = "b41d29dd317255756acea206aa24ba49765c39ba";
-  #         sha256 = "0x8k1vifha417x4mxzdf33acgyf8rg69ipbap2nm9s08fhwz6436";
-  #       })
-  #       { inherit (pkgs) system; };
-  #   in
-  #   {
-  #     enable = true;
-  #     driSupport = true;
-  #     extraPackages = [
-  #       pkgsMesaClover.mesa.opencl
-  #     ];
-  #  };
 
 
   # This value determines the NixOS release from which the default

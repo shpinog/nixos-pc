@@ -13,29 +13,28 @@ with deviceSpecific; {
     interval = "daily";
   };
 
-  # ATI power manager profile
-  systemd.services.radeon_low_power = {
-    script = ''
-      echo "low" > /sys/class/drm/card0/device/power_profile
-      echo "low" > /sys/class/drm/card1/device/power_profile
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
+  # # ATI power manager profile
+  # systemd.services.radeon_low_power = {
+  #   script = ''
+  #     echo "low" > /sys/class/drm/card0/device/power_profile
+  #     echo "low" > /sys/class/drm/card1/device/power_profile
+  #   '';
+  #   wantedBy = [ "multi-user.target" ];
+  # };
 
 
 
 
-  #  hardware.opengl = {
-  #    enable = true;
-  #    extraPackages = with pkgs; [
-  #      vaapiVdpau
-  #      libvdpau-va-gl
-  #      mesa.opencl
-  #      ];
+   hardware.opengl = {
+     enable = true;
+     extraPackages = with pkgs; [
+       vaapiVdpau
+       libvdpau-va-gl
+       ];
 
-  #    driSupport = true;
-  #    driSupport32Bit = true; # For steam
-  #  };
+     driSupport = true;
+     driSupport32Bit = true; # For steam
+   };
 
 
 
