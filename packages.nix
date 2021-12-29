@@ -1,11 +1,7 @@
 { config, pkgs, system, ... }:
 
 
-let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-in
+
 {
 
 
@@ -21,29 +17,30 @@ in
     sudo
     linuxPackages.x86_energy_perf_policy
     ethtool
+    compsize #btrfs compression info
 
     ###########-Wayland\Sway ###########
-    unstable.firefox-wayland
-    unstable.qtile
-    unstable.wlroots
-    unstable.kakoune
-    unstable.bitwarden
-    unstable.clipman
-    unstable.flashfocus
-    unstable.autotiling
+    firefox-wayland
+    qtile
+    wlroots
+    kakoune
+    bitwarden
+    clipman
+    flashfocus
+    autotiling
     swaykbdd
     jq
     python39Packages.cairocffi
     python39Packages.dbus-next
-    unstable.foot
+    foot
     wayland
     clipman
     emacs-nox
-    unstable.mako
+    mako
     swaybg
     wofi
     ###########Pipeware##############
-    unstable.easyeffects
+    easyeffects
 
     ########### Gnome utils ###########
     gnome.nautilus
@@ -51,7 +48,7 @@ in
     gnome.file-roller
 
     ########### Other ###########
-    unstable.tdesktop
+    tdesktop
     #steam-run-native
     xclip
     glib
@@ -78,7 +75,7 @@ in
     ntfs3g
     glibc
     smartmontools
-    unstable.vscodium
+    vscodium
     flatpak
     ncurses5
     ncurses

@@ -11,9 +11,9 @@
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
     # ./home-manager/home-manager.nix
-    ./configuration-fonts.nix
-    ./configuration-packages.nix
-    ./configuration-xserver.nix
+    ./fonts.nix
+    ./packages.nix
+    ./xserver.nix
     ./hardware.nix
     ./polkit.nix
     ./kernel.nix
@@ -37,12 +37,7 @@
     allowUnfree = true;
     joypixels.acceptLicense = true;
 
-    packageOverrides = pkgs: {
-
-      unstable = import <nixos-unstable> {
-        config = config.nixpkgs.config;
-      };
-    };
+  
   };
 
 

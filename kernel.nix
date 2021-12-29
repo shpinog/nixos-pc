@@ -8,8 +8,8 @@
 
   boot.kernelPackages = with pkgs; linuxPackages_xanmod;
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" "nvidia"  ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "nvme" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "nvme" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "" ];

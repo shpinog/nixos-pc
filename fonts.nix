@@ -12,6 +12,8 @@
       dejavu_fonts
       font-awesome
       font-awesome-ttf
+      vistafonts
+
     ];
 
     fontconfig = {
