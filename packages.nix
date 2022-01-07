@@ -8,7 +8,7 @@
 
 
 
-  programs.steam.enable = false;
+  programs.steam.enable = true;
 
 
 
@@ -32,7 +32,6 @@
     jq
     python39Packages.cairocffi
     python39Packages.dbus-next
-    foot
     wayland
     clipman
     emacs-nox
@@ -84,7 +83,6 @@
     unar
     git
     sysctl
-    neovim
     python3Full
     python3Packages.pip
     python3Packages.setuptools

@@ -48,16 +48,7 @@
   environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ]; # provides a default authentification client for policykit
 
 
-  # Networking
-
-  networking.useDHCP = false;
-  networking.enableIPv6 = true;
-  networking.networkmanager.enable = true;
-  programs.nm-applet.enable = true;
-  services.openssh.enable = true;
-  networking.firewall.logRefusedConnections = false;
-  networking.firewall.allowedTCPPorts = [ 8868 4668 4679 22 ];
-  networking.firewall.allowedUDPPorts = [ 8868 4679 69 ];
+ 
 
   #networking.interfaces.enp7s0.useDHCP = true;
 

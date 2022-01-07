@@ -30,6 +30,8 @@ with deviceSpecific; {
      extraPackages = with pkgs; [
        vaapiVdpau
        libvdpau-va-gl
+       SDL2
+       vulkan-validation-layers
        ];
 
      driSupport = true;
