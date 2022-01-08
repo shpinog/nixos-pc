@@ -11,7 +11,7 @@ let
 
     source ${waylandEnablement}
 
-    ${pkgs.systemd}/bin/systemd-run --user --scope --collect --quiet --unit=sway-$(${pkgs.systemd}/bin/systemd-id128 new) ${pkgs.systemd}/bin/systemd-cat --identifier=sway ${pkgs.sway}/bin/sway --unsupported-gpu $@
+    ${pkgs.systemd}/bin/systemd-run --user --scope --collect --quiet --unit=sway-$(${pkgs.systemd}/bin/systemd-id128 new) ${pkgs.systemd}/bin/systemd-cat --identifier=sway ${pkgs.sway}/bin/sway $@
   '';
 in
 {

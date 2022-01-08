@@ -15,31 +15,11 @@
 
   environment.systemPackages = with pkgs; [
     sudo
-    linuxPackages.x86_energy_perf_policy
     ethtool
-    compsize #btrfs compression info
-
+  
     ###########-Wayland\Sway ###########
-    firefox-wayland
-    qtile
     wlroots
-    kakoune
-    bitwarden
-    clipman
-    flashfocus
-    autotiling
-    swaykbdd
-    jq
-    python39Packages.cairocffi
-    python39Packages.dbus-next
     wayland
-    clipman
-    emacs-nox
-    mako
-    swaybg
-    wofi
-    ###########Pipeware##############
-    easyeffects
 
     ########### Gnome utils ###########
     gnome.nautilus
@@ -55,57 +35,34 @@
     wireguard-tools
     pkg-config
     wpgtk
-    kitty
     killall
     clinfo
     schedtool
-    sublime3
-    xorg.libXft
-    symbola
-    font-manager
-    noto-fonts
-    noto-fonts-extra
-    pass
     gnupg
-    spotify
+    
     lm_sensors
     breeze-icons
-    papirus-icon-theme
-    ntfs3g
     glibc
     smartmontools
     vscodium
-    flatpak
-    ncurses5
-    ncurses
     wget
     unzip
     unar
     git
     sysctl
     python3Full
-    python3Packages.pip
-    python3Packages.setuptools
-    vlc
-    volctl
-    flameshot
     htop
-    dmenu
-    alacritty
+    btop
     gnumake
     gcc
     global
     ctags
-    fpc
     binutils
     coreutils
     utillinux
     wpa_supplicant
-    python37Packages.termcolor
     iw
-    networkmanager-openvpn
 
-    #    bluez blueman
   ];
 
   programs = {

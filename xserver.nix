@@ -13,7 +13,7 @@
 #  hardware.nvidia.modesetting.enable = true;
 #  hardware.nvidia.powerManagement.enable = true;
 
-
+  
   services.xserver = {
     enable = true;
     autorun = false;
@@ -46,7 +46,6 @@
     windowManager = {
       awesome = {
         enable = true;
-        luaModules = [ pkgs.luaPackages.luafilesystem pkgs.luaPackages.cjson ];
       };
     };
 

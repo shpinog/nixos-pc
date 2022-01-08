@@ -14,9 +14,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/89797fd6-75ae-4dc8-9799-72687ee4fbd7";
-      fsType = "btrfs";
-      options = ["compress=zstd"];
+    { device = "/dev/disk/by-uuid/19288af7-1cd6-43e1-9c87-ff015a65dc7d";
+      fsType = "f2fs";
     };
 
   fileSystems."/boot" =
@@ -26,4 +25,5 @@
 
   swapDevices = [ ];
 
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

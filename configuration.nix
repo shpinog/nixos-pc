@@ -35,7 +35,6 @@
   #Enable nonfree and unstable
   nixpkgs.config = {
     allowUnfree = true;
-    joypixels.acceptLicense = true;
 
   
   };
@@ -66,8 +65,8 @@
 
 
   #Enable flatpak
-  services.flatpak.enable = true;
-  xdg.portal.enable = true;
+  services.flatpak.enable = false;
+  xdg.portal.enable = false;
 
   #User and shell settings
 
@@ -76,7 +75,7 @@
   programs.bash.enableCompletion = true;
 
   #Android
-  programs.adb.enable = true;
+  programs.adb.enable = false;
 
   users.users.shpinog = {
     isNormalUser = true;
