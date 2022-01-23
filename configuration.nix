@@ -10,7 +10,6 @@
     # Include the results of the hardware scan.
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ./hardware-configuration.nix
-    # ./home-manager/home-manager.nix
     ./fonts.nix
     ./packages.nix
     ./xserver.nix
@@ -18,14 +17,14 @@
     ./polkit.nix
     ./kernel.nix
     ./network.nix
-    ./greetd.nix
-    #./mesa.nix
+    ./sway.nix
 
   ];
 
   #VirtualBox
 
   services.gvfs.enable = true;
+  
 
 
 
@@ -66,7 +65,7 @@
 
   #Enable flatpak
   services.flatpak.enable = false;
-  xdg.portal.enable = false;
+  xdg.portal.enable = true;
 
   #User and shell settings
 

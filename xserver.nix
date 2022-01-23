@@ -12,6 +12,8 @@
 
 #  hardware.nvidia.modesetting.enable = true;
 #  hardware.nvidia.powerManagement.enable = true;
+programs.dconf.enable = true;
+services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   
   services.xserver = {

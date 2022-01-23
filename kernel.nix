@@ -49,7 +49,7 @@
       "intel_pstate=enable"
       "radeon.audio=0"
       "amdgpu.dc=1"
-      "amdgpu.ppfeaturemask=0xfffd7fff"
+
     ];
   };
 
