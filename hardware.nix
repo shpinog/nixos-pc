@@ -23,36 +23,35 @@ with deviceSpecific; {
   # };
 
 
-
-
+### Video Drivers
+   programs.gamemode.enable = true;
    hardware.opengl = {
      enable = true;
      extraPackages = with pkgs; [
+       vulkan-tools
        vaapiVdpau
        libvdpau-va-gl
        SDL2
-       vulkan-validation-layers
        ];
-
+    extraPackages32 = with pkgs; [
+       ];
      driSupport = true;
      driSupport32Bit = true; # For steam
    };
 
+  
 
 
+
+### Media settings
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
-    # If you want to use JACK applications, uncomment this
 
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
 

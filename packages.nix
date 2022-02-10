@@ -16,7 +16,6 @@
   environment.systemPackages = with pkgs; [
     sudo
     ethtool
-  
     ###########-Wayland\Sway ###########
     wlroots
     wayland
@@ -25,6 +24,7 @@
     gnome.nautilus
     gnome.nautilus-python
     gnome.file-roller
+    cmake
 
     ########### Other ###########
     tdesktop

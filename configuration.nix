@@ -18,6 +18,7 @@
     ./kernel.nix
     ./network.nix
     ./sway.nix
+   
 
   ];
 
@@ -78,7 +79,7 @@
 
   users.users.shpinog = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "adbusers" "storage" "media" "docker" "lp" "corectrl" ]; # Enable ‘sudo’ for the user.A
+    extraGroups = [ "wheel" "networkmanager" "adbusers" "storage" "media" "docker" "lp" "corectrl" "video" ]; # Enable ‘sudo’ for the user.A
     shell = pkgs.bash;
   };
 

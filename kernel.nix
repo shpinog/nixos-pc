@@ -1,20 +1,20 @@
 { config, pkgs, lib, ... }: {
 
   # Boot and modules
-  nix.buildCores = 20;
-  nix.maxJobs = lib.mkDefault 20;
-  
+#  nix.settings.cores = 16;
+#  nix.settings.max-jobs = 16;
+  environment.memoryAllocator.provider = "libc";
   
 
-  boot.kernelPackages = with pkgs; linuxPackages_xanmod;
+  boot.kernelPackages = with pkgs; linuxPackages-rt_latest;
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "nvme"  ];
+  boot.initrd.availableKernelModules = [ "amdgpu" "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
+  boot.initrd.kernelModules = [ "amdgpu""dm-snapshot" "nvme"  ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "" ];
   security.apparmor.enable = false;
-  zramSwap.enable = false;
+  zramSwap.enable = true;
   zramSwap.algorithm = "zstd";
   services.earlyoom.enable = true;
   services.earlyoom.enableNotifications = true;
@@ -35,6 +35,10 @@
       systemd-boot.consoleMode = "max";
       timeout = 30;
     };
+    blacklistedKernelModules =
+      [ 
+        "radeon"
+      ];
     consoleLogLevel = 3;
     extraModprobeConfig = "options ec_sys write_support=1";
     kernel.sysctl."vm.swappiness" = 200;
@@ -43,13 +47,17 @@
     kernelParams = [
       "quiet"
       "video=efifb"
-      "radeon.si_support=0" "amdgpu.si_support=1"
+      "radeon.si_support=0"
+      "radeon.cik_support=0"
+      "amdgpu.si_support=1"
+      "amdgpu.cik_support=1"
       "mitigations=off"
-      "radeon.dpm=1"
       "intel_pstate=enable"
-      "radeon.audio=0"
       "amdgpu.dc=1"
-
+      "iomem=relaxed"
+      "nohz=off"
+      "highres=off"
+      "nolapic_timer"
     ];
   };
 
