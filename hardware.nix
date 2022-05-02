@@ -13,14 +13,13 @@ with deviceSpecific; {
     interval = "daily";
   };
 
-  # # ATI power manager profile
-  # systemd.services.radeon_low_power = {
-  #   script = ''
-  #     echo "low" > /sys/class/drm/card0/device/power_profile
-  #     echo "low" > /sys/class/drm/card1/device/power_profile
-  #   '';
-  #   wantedBy = [ "multi-user.target" ];
-  # };
+   # ATI power manager profile
+   systemd.services.radeon_low_power = {
+     script = ''
+       echo "performance" > /sys/class/drm/card0/device/power_dpm_state
+     '';
+     wantedBy = [ "multi-user.target" ];
+   };
 
 
 ### Video Drivers
@@ -31,7 +30,6 @@ with deviceSpecific; {
        vulkan-tools
        vaapiVdpau
        libvdpau-va-gl
-       SDL2
        ];
     extraPackages32 = with pkgs; [
        ];

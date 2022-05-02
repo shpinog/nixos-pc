@@ -18,6 +18,8 @@
     ./kernel.nix
     ./network.nix
     ./sway.nix
+    ./virtualisation.nix
+    ./steam.nix
    
 
   ];
@@ -25,6 +27,8 @@
   #VirtualBox
 
   services.gvfs.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
   
 
 
@@ -42,7 +46,6 @@
 
   nix.autoOptimiseStore = true;
   networking.hostId = "d1be0afd";
-  virtualisation.docker.enable = false;
 
   environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ]; # provides a default authentification client for policykit
 
@@ -91,7 +94,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 
 }
 

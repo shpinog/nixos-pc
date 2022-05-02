@@ -8,7 +8,6 @@
 
 
 
-  programs.steam.enable = true;
 
 
 

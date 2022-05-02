@@ -6,8 +6,8 @@
   environment.memoryAllocator.provider = "libc";
   
 
-  boot.kernelPackages = with pkgs; linuxPackages-rt_latest;
-
+  boot.kernelPackages = with pkgs; linuxPackages_zen;
+  boot.initrd.enable = true;
   boot.initrd.availableKernelModules = [ "amdgpu" "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
   boot.initrd.kernelModules = [ "amdgpu""dm-snapshot" "nvme"  ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -47,6 +47,7 @@
     kernelParams = [
       "quiet"
       "video=efifb"
+      "fsck.mode=force"
       "radeon.si_support=0"
       "radeon.cik_support=0"
       "amdgpu.si_support=1"
@@ -55,9 +56,6 @@
       "intel_pstate=enable"
       "amdgpu.dc=1"
       "iomem=relaxed"
-      "nohz=off"
-      "highres=off"
-      "nolapic_timer"
     ];
   };
 
