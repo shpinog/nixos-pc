@@ -20,15 +20,17 @@
     ./sway.nix
     ./virtualisation.nix
     ./steam.nix
-   
+    ./opengl.nix
 
   ];
+
 
   #VirtualBox
 
   services.gvfs.enable = true;
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = false;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
   
 
 
@@ -44,7 +46,7 @@
   };
 
 
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
   networking.hostId = "d1be0afd";
 
   environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ]; # provides a default authentification client for policykit
@@ -78,7 +80,7 @@
   programs.bash.enableCompletion = true;
 
   #Android
-  programs.adb.enable = false;
+  programs.adb.enable = true;
 
   users.users.shpinog = {
     isNormalUser = true;
@@ -86,7 +88,12 @@
     shell = pkgs.bash;
   };
 
+  nix.settings.trusted-users = 
+  [
+    "root"
+    "shpinog"
 
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

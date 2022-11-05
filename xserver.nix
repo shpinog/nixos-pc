@@ -10,16 +10,15 @@
   #  services.xserver.displayManager.autoLogin.enable = true;
   #  services.xserver.displayManager.autoLogin.user = "shpinog";
 
-#  hardware.nvidia.modesetting.enable = true;
-#  hardware.nvidia.powerManagement.enable = true;
 programs.dconf.enable = true;
+programs.xfconf.enable = true;
 services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   
   services.xserver = {
     enable = true;
     autorun = false;
-    videoDrivers = [ "amdgpu" ];
+    videoDrivers = [ "nvidia" ];
 
 
     # deviceSection = ''

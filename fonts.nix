@@ -8,15 +8,15 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       ubuntu_font_family
+      jetbrains-mono
       noto-fonts-emoji
       noto-fonts
       dejavu_fonts
       font-awesome
-      font-awesome-ttf
       vistafonts
       liberation_ttf
       iosevka
-
+     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
     ];
 
     fontconfig = {
@@ -34,8 +34,8 @@
       defaultFonts = {
         serif = [ "Noto Serif" ];
         sansSerif = [  "Noto Sans" ];
-        monospace = [ "Noto Sans Mono" "Iosevka" ];
-        emoji = [ "Font Awesome 5 Brands" "Noto Color Emoji" "Font Awesome 5 Free" "Font Awesome 5 Free Solid" ];
+        monospace = [ "JetBrains Mono Regular" "Noto Sans Mono" "Iosevka" ];
+        emoji = [ "Nerd" "Font Awesome 5 Brands" "Noto Color Emoji" "Font Awesome 5 Free" "Font Awesome 5 Free Solid" ];
 
       };
     };

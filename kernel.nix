@@ -1,32 +1,32 @@
 { config, pkgs, lib, ... }: {
 
   # Boot and modules
-#  nix.settings.cores = 16;
-#  nix.settings.max-jobs = 16;
-  environment.memoryAllocator.provider = "libc";
+  nix.settings.cores = 12;
+  nix.settings.max-jobs = 12;
   
 
-  boot.kernelPackages = with pkgs; linuxPackages_zen;
+  boot.kernelPackages = with pkgs; linuxPackages_5_4;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+
   boot.initrd.enable = true;
-  boot.initrd.availableKernelModules = [ "amdgpu" "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
-  boot.initrd.kernelModules = [ "amdgpu""dm-snapshot" "nvme"  ];
+  boot.initrd.availableKernelModules = [ "radeon" "ehci_pci" "ahci"  "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod"  ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "nvme"  ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.supportedFilesystems = [ "" ];
+  boot.supportedFilesystems = [ "ntfs" ];
   security.apparmor.enable = false;
-  zramSwap.enable = true;
+  zramSwap.enable = false;
   zramSwap.algorithm = "zstd";
-  services.earlyoom.enable = true;
-  services.earlyoom.enableNotifications = true;
+  services.earlyoom.enable = false;
+  services.earlyoom.enableNotifications = false;
   services.auto-cpufreq.enable = false;
   hardware.enableAllFirmware = false;
-
+  services.cpupower-gui.enable = false;
 
 
   ### Boot Kernel
 
   # Use the systemd-boot EFI boot loader.
-
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -37,25 +37,21 @@
     };
     blacklistedKernelModules =
       [ 
-        "radeon"
+        "amdgpu"
+        "nouveau"
       ];
     consoleLogLevel = 3;
     extraModprobeConfig = "options ec_sys write_support=1";
-    kernel.sysctl."vm.swappiness" = 200;
+#    kernel.sysctl."vm.swappiness" = 200;
     kernel.sysctl."kernel/sysrq" = 1;
     kernel.sysctl."abi.vsyscall32" = 0;
     kernelParams = [
       "quiet"
-      "video=efifb"
       "fsck.mode=force"
-      "radeon.si_support=0"
-      "radeon.cik_support=0"
-      "amdgpu.si_support=1"
-      "amdgpu.cik_support=1"
+      "psi=1"
       "mitigations=off"
       "intel_pstate=enable"
-      "amdgpu.dc=1"
-      "iomem=relaxed"
+      "nvidia.NVreg_EnablePCIeGen3=1"
     ];
   };
 

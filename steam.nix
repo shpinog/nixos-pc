@@ -10,6 +10,14 @@
        icu63
        cairo
        libtensorflow
+       zlib
+       dbus
+       freetype
+       glib
+       atk
+       pango
+       fontconfig
+       xorg.libxcb
         
       ];
     };

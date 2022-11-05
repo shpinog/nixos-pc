@@ -13,11 +13,13 @@
 
 
   environment.systemPackages = with pkgs; [
+    linux-firmware
     sudo
     ethtool
     ###########-Wayland\Sway ###########
     wlroots
     wayland
+    pciutils
 
     ########### Gnome utils ###########
     gnome.nautilus
@@ -26,11 +28,9 @@
     cmake
 
     ########### Other ###########
-    tdesktop
     #steam-run-native
     xclip
     glib
-    wireguard
     wireguard-tools
     pkg-config
     wpgtk
@@ -38,6 +38,7 @@
     clinfo
     schedtool
     gnupg
+    rnnoise-plugin
     
     lm_sensors
     breeze-icons
@@ -66,7 +67,7 @@
 
   programs = {
     gnupg.agent = {
-      enable = true;
+      enable = false;
       pinentryFlavor = "curses";
       enableSSHSupport = true;
     };

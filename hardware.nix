@@ -14,28 +14,90 @@ with deviceSpecific; {
   };
 
    # ATI power manager profile
-   systemd.services.radeon_low_power = {
-     script = ''
-       echo "performance" > /sys/class/drm/card0/device/power_dpm_state
-     '';
-     wantedBy = [ "multi-user.target" ];
-   };
+   # systemd.services.radeon_low_power = {
+   #   script = ''
+   #     echo "performance" > /sys/class/drm/card0/device/power_dpm_state
+   #   '';
+   #   wantedBy = [ "multi-user.target" ];
+   # };
 
-
+#Mouse
+services.ratbagd.enable = true;
 ### Video Drivers
-   programs.gamemode.enable = true;
-   hardware.opengl = {
-     enable = true;
-     extraPackages = with pkgs; [
-       vulkan-tools
-       vaapiVdpau
-       libvdpau-va-gl
-       ];
-    extraPackages32 = with pkgs; [
-       ];
-     driSupport = true;
-     driSupport32Bit = true; # For steam
-   };
+programs.gamemode = {
+  enable  = true;
+  enableRenice = true;
+};
+
+# hardware.opengl.enable = true;
+# hardware.opengl.driSupport32Bit = true;
+
+# hardware.nvidia = {
+#      
+#     #powerManagement = {
+#         #enabled = true;
+#
+#         #finegrained = true; #maybe comment this out idk what it does
+#     #};
+#
+#     #uses beta drivers
+#   
+#     open = false;
+#     #Fixes a glitch
+#     nvidiaPersistenced = false;
+#     #Required for amdgpu and nvidia gpu pairings
+#     modesetting.enable = true;
+#   #   prime = {
+#   #       offload.enable = true;
+#   #       #sync.enable = true;
+#   # 
+#   #       amdgpuBusId = "PCI:04:00:0";
+#   #
+#   #       nvidiaBusId = "PCI:03:00:0";
+#   #   };
+#   };
+
+
+hardware = {
+  opengl =
+    let
+      fn = oa: {
+        nativeBuildInputs = oa.nativeBuildInputs ++ [ pkgs.glslang ];
+        mesonFlags = oa.mesonFlags ++ [ "-Dvulkan-layers=device-select,overlay" ];
+#       patches = oa.patches ++ [ ./mesa-vulkan-layer-nvidia.patch ]; See below 
+        postInstall = oa.postInstall + ''
+            mv $out/lib/libVkLayer* $drivers/lib
+
+            #Device Select layer
+            layer=VkLayer_MESA_device_select
+            substituteInPlace $drivers/share/vulkan/implicit_layer.d/''${layer}.json \
+              --replace "lib''${layer}" "$drivers/lib/lib''${layer}"
+
+            #Overlay layer
+            layer=VkLayer_MESA_overlay
+            substituteInPlace $drivers/share/vulkan/explicit_layer.d/''${layer}.json \
+              --replace "lib''${layer}" "$drivers/lib/lib''${layer}"
+          '';
+      };
+    in
+    with pkgs; {
+      enable = true;
+      driSupport32Bit = true;
+      driSupport = true;
+      extraPackages = with pkgs; [
+        vulkan-tools
+        vaapiVdpau
+        libvdpau-va-gl
+        ];
+      package = (mesa.override {
+        galliumDrivers = [  "radeonsi" "zink" "swrast"];
+        vulkanDrivers = ["amd"];
+        }).drivers;
+      package32 = (pkgsi686Linux.mesa.overrideAttrs fn).drivers;
+    };
+ };
+
+
 
   
 
@@ -48,9 +110,8 @@ with deviceSpecific; {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-
-
   };
+  programs.noisetorch.enable = true;
 
 
   sound.enable = true;
@@ -64,11 +125,6 @@ with deviceSpecific; {
   hardware.pulseaudio = {
     enable = false;
     package = pkgs.pulseaudioFull;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
-    extraConfig = "load-module module-echo-cancel use_master_format=1 aec_method=webrtc source_name=echoCancel_source sink_name=echoCancel_sink
-set-default-source echoCancel_source
-set-default-sink echoCancel_sink
-    ";
   };
 
 
